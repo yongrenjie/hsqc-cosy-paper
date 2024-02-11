@@ -126,6 +126,7 @@
 \newcommand{\carbonbulk}{\ch{^{12}C}}
 \newcommand{\carbon}{\ch{^{13}C}}
 \newcommand{\nitrogen}{\ch{^{15}N}}
+\newcommand{\fluorine}{\ch{^{19}F}}
 \newcommand{\SInf}{\textit{Supplementary Information}}
 \newcommand{\DeltaE}{\Delta_{\symup{E}}}
 \newcommand{\CH}{\carbon{}--\proton{}}
@@ -240,20 +241,23 @@ The benefits and drawbacks of several different pulse sequence implementations a
 
 \section{Introduction}
 
-\todo{(Standard NOAH intro, steal/paraphrase from somewhere)}
+The acceleration of multidimensional NMR spectroscopy has been an extremely popular topic in recent years, with techniques ranging from ultrafast NMR\autocite{Frydman2002PNASUSA,Pelupessy2003JACS,Frydman2003JACS} and non-uniform sampling (NUS)\autocite{Kazimierczuk2010PNMRS,Mobli2014PNMRS,Kazimierczuk2015MRC} to multiple-receiver technology\autocite{Kupce2006JACS,Kupce2008JACS,Kovacs2016MRC} and reduction of recovery delays\autocite{Kupce2007MRC,SchulzeSunninghausen2014JACS,Becker2019JMR}.
+NOAH (NMR by Ordered Acquisition using \proton{} detection) experiments\autocite{Kupce2017ACIE}, which fall under the category of multiple-FID experiments\autocite{Yong2023RSCBook}, concatenate multiple 2D experiments (`modules') into a single nested pulse sequence with elision of intermediate recovery delays.
+Such `supersequences' provide up to $4\times$ time savings compared to conventional, one-by-one acquisition of each 2D spectrum, and have gained popularity due to their versatility as well as the fact that they do not require specialised hardware.
 
-In our previous work\autocite{Yong2021JMR}, we described the implementation of the HSQC-TOCSY module in NOAH supersequences.
-The HSQC-TOCSY experiment is extremely information-rich, providing both `direct' responses which arise from directly bonded \CH{} pairs, and `indirect' responses from protons in the same spin system as those bound to \carbon{}.
+Virtually all of the most commonly used 2D experiments have been adapted for use within NOAH supersequences, as neatly listed on the GENESIS website\autocite{Yong2022AC}.
+In particular, we previously described the implementation of the HSQC-TOCSY module in NOAH supersequences.\autocite{Yong2021JMR}
+The HSQC-TOCSY experiment is extremely information-rich, providing both `direct' responses which arise from directly bonded \CH{} pairs, and `indirect' responses from protons in the same spin system as those bound to \carbon{} \todo{(FIGURE 1A)}.
 This is essentially the same information as in separate HSQC and TOCSY spectra, but with the additional benefit that the TOCSY signals are dispersed more widely across the \carbon{} indirect dimension: this serves to greatly reduce the possibility of overlap and thus increase interpretability.
 
 One downside of the HSQC-TOCSY is the largely indiscriminate transfer of magnetisation effected by the isotropic mixing block, which means that it is difficult to determine the number of bonds separating the \carbon{} and \proton{} resonances in the `indirect' responses.
 It is possible to record multiple HSQC-TOCSY spectra with different mixing times to glean insight into how many transfer steps each peak arises from.
 However, this is a time-consuming process, and although multiple HSQC-TOCSY experiments could theoretically be concatenated into a NOAH supersequence, repeatedly sampling the \magn{C} magnetisation pool will lead to degraded sensitivity and reduced usefulness.
 
-A direct method of overcoming this is to instead record an HSQC-COSY spectrum, where the `indirect' responses arise only from single-step coherence transfer between directly coupled \HH{} pairs.
+A direct method of overcoming this is to instead record an HSQC-COSY spectrum, where the `indirect' responses arise only from single-step coherence transfer between directly coupled \HH{} pairs \todo{(FIGURE 1B)}.
 Experiments of this kind date back almost two decades, including the celebrated H2BC experiment\autocite{Nyberg2005JACS,Nyberg2005MRC}, and later 2BOB/H2OBC\autocite{Kupce2017MRC} and HMQC-COSY\autocite{Hu2011JBNMR}.
 The 2BOB experiment in particular has previously been incorporated in NOAH supersequences\autocite{Kupce2019JMR}.
-\todo{More recently, ... the HSQC-CLIP-COSY, ...}
+Since then, the HSQC-CLIP-COSY\autocite{Gyongyosi2018CPC,Gyongyosi2021AC} has emerged as a modern and improved experiment for this purpose: it provides pure absorption-mode lineshapes and does not suffer from amplitude modulation due to proton--proton couplings, a downside of the constant-time technique used in some of its predecessors.
 
 Although the HSQC-CLIP-COSY performs admirably as a standalone experiment, the requirements for NOAH supersequences are more stringent: in particular, any HSQC-COSY module should---ideally---preserve unused magnetisation for later modules.
 The most important example of this is the preservation of \magnnot{C} magnetisation for a later homonuclear module: an HSQC-COSY experiment in principle does not need this as it only excites \carbon{}--bound protons.
