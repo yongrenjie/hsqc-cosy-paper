@@ -231,7 +231,7 @@
     \item Sensitivity analyses of modules within typical NMR supersequences involving HSQC-COSY experiments.
 \end{itemize}
 
-NMR supersequences, as exemplified by the NOAH (NMR by Ordered Acquisition using \proton detection) technique, are a powerful way of acquiring multiple 2D data sets in much shorter durations.
+NMR supersequences, as exemplified by the NOAH (NMR by Ordered Acquisition using \proton{} detection) technique, are a powerful way of acquiring multiple 2D data sets in much shorter durations.
 This is accomplished through targeted excitation and detection of the magnetisation belonging to specific isotopologues (`magnetisation pools').
 Separately, the HSQC-COSY experiment has recently seen an increase in popularity due to the high signal dispersion in the indirect dimension and the removal of ambiguity traditionally associated with HSQC-TOCSY experiments.
 Here, we describe how the HSQC-COSY experiment can be integrated as a `module' within NOAH supersequences.
@@ -516,7 +516,11 @@ However, this advantage is greatly narrowed: the CLIP-COSY now only has 40\% of 
 
 \section{Conclusion}
 
-\ldots
+In this work, we have described in depth how the HSQC-COSY experiment may be incorporated in NOAH supersequences.
+Three different versions of the HSQC-COSY module were analysed, from both a theoretical perspective (using product operator analysis) as well as a practical one (using sensitivity comparisons of both \noah{Sc,S,Cc} and \noah{B,Sc,S,Cc} supersequences).
+All of these modules are available on the GENESIS website (\url{https://nmr-genesis.co.uk}): the default is set to the TSE HSQC-COSY.
+While we believe that this is most likely to cater to the average user's needs, it is also possible for users to individually select their preferred implementation through the `developer mode' option, where the CLIP, DSE, and TSE options are respectively labelled as \texttt{C\_HSQCC\_CLIP}, \texttt{C\_HSQCC\_DSE}, and \texttt{CI\_HSQCC}.
+It is our hope that the exposition provided here will allow users to come to an informed decision based on their needs, and thus reap the maximum benefit from any NOAH supersequence featuring the HSQC-COSY module.
 
 \section*{Acknowledgements}
 
