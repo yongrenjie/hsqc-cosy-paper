@@ -277,14 +277,14 @@ Since then, the HSQC-CLIP-COSY\autocite{Gyongyosi2018CPC,Gyongyosi2021AC} has em
 Although the HSQC-CLIP-COSY performs admirably as a standalone experiment, the requirements for NOAH supersequences are more stringent: in particular, any HSQC-COSY module should---ideally---preserve unused magnetisation for later modules.
 The most important example of this is magnetisation of all protons not directly bound to \carbon{} (denoted\autocite{Orts2018M,Yong2021JMR} `\magnnot{C}').
 The HSQC-COSY module does not use this `magnetisation pool', and if it returns this magnetisation to the equilibrium $+z$ position, it can be sampled in a homonuclear module later in the supersequence.
-Another key feature of the NOAH HSQC-TOCSY module is the fact that it allows for variable excitation of \carbon{}--bound proton magnetisation (denoted `\magn{C}'), meaning that a portion of it can be saved for a later heteronuclear module (e.g.\ an HSQC).
-This feature was directly inspired by the ASAP-HMQC\autocite{Kupce2007MRC} and HSQC\autocite{SchulzeSunninghausen2014JACS,SchulzeSunninghausen2017JMR,Koos2019JMR,Becker2019JMR} sequences, which store partial \magn{C} magnetisation for subsequent $t_1$ increments instead of different modules.
+Another key feature of the NOAH HSQC-TOCSY module is the fact that it allows for variable excitation of \carbon{}-bound proton magnetisation (denoted `\magn{C}'), meaning that a portion of it can be saved for a later heteronuclear module (e.g.\ an HSQC).
+This feature was directly inspired by the ASAP-HMQC\autocite{Kupce2007MRC} and ASAP-HSQC\autocite{SchulzeSunninghausen2014JACS,SchulzeSunninghausen2017JMR,Koos2019JMR,Becker2019JMR} sequences, which store partial \magn{C} magnetisation for subsequent $t_1$ increments instead of different modules.
 We should therefore like any implementation of the HSQC-COSY to also exhibit this flexibility, as it allows the user to fine-tune the sensitivities of the modules within the supersequence for maximal performance.
 
 In this work, we evaluate three different implementations of the NOAH HSQC-COSY module against several different criteria.
 These pulse sequences have been very briefly described in our previous work, but in a different context of `parallel' supersequences\autocite{Kupce2021JACSA}: here we go into substantially more depth about the development, and the relative merits of, the three different HSQC-COSY forms.
-\changed{We evaluate these HSQC-COSY implementations experimentally through the \noah{Sc,S,Cc} and \noah{B,Sc,S,Cc} (\noah*{B} = HMBC, \noah*{Sc} = HSQC-COSY, \noah*{S} = HSQC, and \noah*{Cc} = CLIP-COSY) supersequences.
-These supersequences are chosen to illustrate the effect of varying the HSQC-COSY implementation on downstream modules, one which uses \magn{C} magnetisation, and one which uses \magnnot{C}.}
+We evaluate these HSQC-COSY implementations experimentally through the \noah{Sc,S,Cc} and \noah{B,Sc,S,Cc} (\noah*{B} = HMBC, \noah*{Sc} = HSQC-COSY, \noah*{S} = HSQC, and \noah*{Cc} = CLIP-COSY) supersequences.
+These supersequences are chosen to illustrate the effect of varying the HSQC-COSY implementation on downstream modules which use \magn{C} (HSQC) and \magnnot{C} (CLIP-COSY) magnetisation pools.
 
 
 \section{HSQC-CLIP-COSY}
@@ -297,7 +297,7 @@ These supersequences are chosen to illustrate the effect of varying the HSQC-COS
         Spins $I$ and $S$ are connected via one-bond \CH{} scalar coupling, and $S$ and $R$ via a (typically three-bond) \HH{} scalar coupling.
         Product operator analysis is provided for three relevant magnetisation pools: the `direct \magn{C}' HSQC-type peaks, the `indirect \magn{C}' responses which arise from coherence transfer from $S$ to $R$ in the perfect echo block, and the `\magnnot{C}' bulk magnetisation which we seek to preserve.
         Single-letter terms are shorthand for magnetisation on spin $S$ (for example, $x$ represents $S_x$); double-element terms to magnetisation on spins $I$ and $S$ (for example, $xz$ is $2I_xS_z$).
-        Letters with asterisks refer to magnetisation on the remote spin $R$; thus, for example, $y^*$ means $R_y$, and $xz^*$ means $2I_xR_z$.
+        Letters with asterisks refer to magnetisation on the remote proton $R$ instead of $S$; thus, for example, $y^*$ means $R_y$, and $xz^*$ means $2I_xR_z$.
         Solid bars are \ang{90} pulses and empty bars \ang{180} pulses; the rounded trapezoid and line represent an adiabatic inversion pulse.
         All pulses are applied along the $+x$-axis unless otherwise specified; the symbolic pulse phases are $\phi_1 = (x, -x)$; $\phi_2 = (x, x, -x, -x)$; and $\phi_{\text{rec}} = (x, -x, -x, x)$.
         Pulsed field gradient amplitudes are $g_1 = \qty{37.10}{\gauss\per\cm}$ and $g_2 = \qty{18.66}{\gauss\per\cm}$.
@@ -322,14 +322,13 @@ Because of this inversion of direct responses, additional multiplicity editing i
     {\phantomsubcaption\label{fig:hsqccosy_comp_tocsy}}%
     {\phantomsubcaption\label{fig:hsqccosy_comp_tse}}%
     \caption[Comparison of spectra acquired with different HSQC-COSY modules]{
-        HSQC-COSY and HSQC-TOCSY spectra, taken from (respectively) \noah{Sc,S,Cc} and \noah{St,S,Cc} experiments.
+        HSQC-COSY and HSQC-TOCSY spectra, taken from (respectively) \noah{Sc,S,Cc} and \noah{St,S,Cc} experiments (\noah*{St} = HSQC-TOCSY).
         Peaks with red and blue colours have opposite signs; blue peaks (positive) are `direct' HSQC-type responses and red peaks (negative) are `indirect' responses.
         \textbf{(\subref*{fig:hsqccosy_comp_clip})} HSQC-CLIP-COSY.
         \textbf{(\subref*{fig:hsqccosy_comp_dse})} DSE HSQC-COSY.
-        \textbf{(\subref*{fig:hsqccosy_comp_tse_norps})} TSE HSQC-COSY without suppression of relay artefacts (described in the text).
-        The relay artefacts are indicated with grey arrows.
+        \textbf{(\subref*{fig:hsqccosy_comp_tse_norps})} The first half of the TSE HSQC-COSY; the relay artefacts described in the text are indicated with grey arrows.
         \textbf{(\subref*{fig:hsqccosy_comp_tocsy})} HSQC-TOCSY with \qty{10}{\ms} mixing time.
-        \textbf{(\subref*{fig:hsqccosy_comp_tse})} TSE HSQC-COSY with suppression of relay artefacts.
+        \textbf{(\subref*{fig:hsqccosy_comp_tse})} The full TSE HSQC-COSY, with suppression of relay artefacts.
         \andro{}
         256 $t_1$ increments were used, with 2 transients per $t_1$ increment.
         All spectra are plotted with the same contour levels.
@@ -363,8 +362,8 @@ In this regard, it is the clear winner of all the sequences explored in this pap
 However, this comes at a price: there is no way for this sequence to preserve any magnetisation for later modules.
 As the product operator analysis shows, all unused magnetisation is dephased by the end of the sequence.
 The effect of this can be observed in the peak sensitivities measured for the \noah{Sc,S,Cc} supersequence (\cref{fig:hsqccosy_sens_clip}).
-\changed{Since the HSQC-CLIP-COSY consumes all \magn{C} and \magnnot{C} magnetisation, both the HSQC and CLIP-COSY which come after it only sample magnetisation that has recovered during the acquisition periods interspersed between modules.
-Thus, both of these modules have substantially reduced sensitivity when compared against a \noah{S,Cc} supersequence (i.e., the same supersequence but with the HSQC-COSY removed).}
+Since the HSQC-CLIP-COSY consumes all \magn{C} and \magnnot{C} magnetisation, both the HSQC and CLIP-COSY which come after it only sample magnetisation that has recovered during the acquisition periods interspersed between modules.
+Thus, both of these modules have substantially reduced sensitivity when compared against a \noah{S,Cc} supersequence (i.e., the same supersequence but with the HSQC-COSY removed).
 
 It is reasonable to question whether minor adjustments can be made to the pulse sequence to render it NOAH-compatible, as has previously been done for modules such as HMBC\autocite{Claridge2019MRC,Kupce2019JMR} and sensitivity-enhanced HSQC\autocite{Hansen2021AC,Yong2021JMR}.
 However, unfortunately, the CLIP element is wholly incompatible with preservation of unused magnetisation.
@@ -425,16 +424,16 @@ This not only leads to preservation of the bulk \magnnot{C} magnetisation, but a
 The product operators immediately after the second $\DeltaE$ delay are $\cos(2\cpi J_{IS} \DeltaE) I_y - \sin(2\cpi J_{IS} \DeltaE) 2I_xS_z$; thus, if we want to excite a proportion $f$ of \magn{C} magnetisation ($0 \leq f \leq 1$), we should set
 $$f = \sin(2\cpi J_{IS} \DeltaE) \implies \DeltaE = \arcsin{f}/(2\cpi J_{IS}),$$
 and since $\Delta = 1/(4J_{IS})$, we have that $\DeltaE = (2\Delta \arcsin{f}) / \cpi$.
-This is identical to that previously described for the NOAH HSQC-TOCSY module\autocite{Yong2021JMR} (although a factor of $2/\cpi$ was erroneously omitted there).
+This is identical to that previously described for the NOAH HSQC-TOCSY module\autocite{Yong2021JMR} (although a factor of $2/\cpi$ was erroneously omitted in that work).
 
 While this sequence exhibits the desired behaviour in terms of magnetisation preservation, the introduction of one extra spin echo leads to the possibility of two-step coherence transfer through successive \HH{} couplings and thus spurious peaks.
 In particular, the intensity of this unwanted transfer pathway is proportional to the extent to which $J_{SR}$ evolves during the first spin echo after $t_1$: therefore, these `relay' artefacts are especially prominent for large magnitudes of $J_{SR}$, such as $^2\!J$ or axial--axial $^3\!J$.
 This is seen clearly in the resulting spectrum (\cref{fig:hsqccosy_comp_tse_norps}): a number of extra peaks, highlighted with grey arrows, are visible compared to the CLIP and DSE HSQC-COSY implementations.
 Indeed, this naive implementation of the TSE HSQC-COSY very much resembles a HSQC-TOCSY acquired with a short mixing time (\cref{fig:hsqccosy_comp_tocsy}), which defeats the purpose of the HSQC-COSY experiment.
 
-This drawback, however, can be elegantly addressed by the introduction of a second experiment (\cref{fig:hsqcc_tse_po_2}).
+This drawback, however, can be elegantly addressed by the introduction of the second half of the experiment (\cref{fig:hsqcc_tse_po_2}).
 The most obvious difference here is the addition of a single \carbon{} \ang{180} pulse, highlighted in red.
-This addition causes $\oneJ{CH}$ to evolve for a total duration of $4\Delta$ during the $2\tau$ spin echo, causing any magnetisation of \carbon{}--bound protons to be inverted.
+This addition causes $\oneJ{CH}$ to evolve for a total duration of $4\Delta$ during the $2\tau$ spin echo, causing any magnetisation of \carbon{}-bound protons to be inverted.
 Conversely, magnetisation which has already undergone coherence transfer to a remote proton during the preceding spin echo is not affected.
 Thus, the effect is to invert the desired signal, while leaving the relay artefacts untouched.
 Subtracting this second dataset from the first (or equivalently, as is done here, inverting the receiver phase on the second and then adding them together) leads to suppression of the relay artefacts.
@@ -442,11 +441,10 @@ Subtracting this second dataset from the first (or equivalently, as is done here
 A more subtle point is that the insertion of an extra \carbon{} \ang{180} pulse also causes any unexcited (i.e., stored) \magn{C} magnetisation to be inverted.
 In order to ensure that this is returned to $+z$ at the end of the sequence, instead of $-z$, a slight adjustment must also be made to the INEPT delay for variable excitation: instead of being shortened, it must be lengthened to a value of $\DeltaE' = (2\Delta (\cpi - \arcsin f))/\cpi$, where as before $f$ is the fraction of \magn{C} magnetisation to be excited.
 
-In the pulse sequences provided, the two versions of the TSE sequence are executed on alternate transients: therefore, there is no need to separately run two different experiments and later add the individual spectra.
+In the pulse sequences provided, the two halves of the TSE sequence are executed on alternate transients: therefore, there is no need to separately run two different experiments and later add the individual spectra.
 However, it does require that an even number of transients are used.
-In practice, the suppression of the relay artefacts works extremely well, as shown in the resulting spectrum (\cref{fig:hsqccosy_comp_tse}): the peaks correspond exactly to those in the CLIP-COSY.
-In terms of the sensitivity of the HSQC-COSY itself, this version comes in the middle: due to the slightly greater length of the sequence compared to the DSE version, there is a small reduction in sensitivity, but it remains more sensitive than the HSQC-CLIP-COSY (\cref{fig:hsqccosy_sens_tse_1}).
-(The sensitivity of the `naive' TSE HSQC-COSY is not compared here, since that experiment has spurious increases in peak height due to multi-step transfer pathways.)
+In practice, the suppression of the relay artefacts works extremely well, as shown in the resulting spectrum (\cref{fig:hsqccosy_comp_tse}): the peaks correspond exactly to those in the HSQC-CLIP-COSY.
+In terms of the sensitivity of the HSQC-COSY itself, this version falls in the middle: due to the slightly greater length of the sequence compared to the DSE version, there is a small reduction in sensitivity, but it remains more sensitive than the HSQC-CLIP-COSY (\cref{fig:hsqccosy_sens_tse_1}).
 
 The effect on the downstream modules, however, is where the TSE version has the greatest influence.
 When acquired with $f = 1$ (\cref{fig:hsqccosy_sens_tse_1}), no residual \magn{C} magnetisation is saved for the HSQC which comes after it: therefore, the sensitivity of the HSQC module is solely determined by relaxation during the previous FID, and is unchanged from previous examples.
