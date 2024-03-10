@@ -1,11 +1,9 @@
 import penguins as pg
 import aptenodytes as apt
-from pathlib import Path
-from matplotlib.patches import Rectangle
 
 apt.thesis()
 
-p = Path(__file__).parent / 'data' / '210303-7a-hsqc-cosy'
+p = apt.nmrd() / '210303-7a-hsqc-cosy'
 
 dss = pg.read(p, [
     111001,   # CLIP

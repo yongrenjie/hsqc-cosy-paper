@@ -5,7 +5,7 @@ from pathlib import Path
 
 apt.thesis()
 
-p = Path(__file__).parent / 'data' / '210723-7a-hsqc-cosy'
+p = apt.nmrd() / '210723-7a-hsqc-cosy'
 
 dsss = [
     pg.read(p, range(12002, 12005)),  # CLIP
