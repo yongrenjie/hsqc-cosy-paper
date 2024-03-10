@@ -1,10 +1,11 @@
 import penguins as pg
 import aptenodytes as apt
 from aptenodytes import Andrographolide as Andro
+from pathlib import Path
 
 apt.thesis()
 
-p = apt.nmrd() / '210723-7a-hsqc-cosy'
+p = Path(__file__).parent / 'data' / '210723-7a-hsqc-cosy'
 
 dsss = [
     pg.read(p, range(3001, 3004)),  # CLIP
@@ -52,4 +53,6 @@ for i, dss, ax, t in apt.enzip(dsss, axs.flat, texts):
 apt.tl()
 apt.label_axes_def(axs)
 # apt.show()
-apt.save(__file__)
+apt.save(__file__, svg=True)
+
+# Edit in Inkscape to add supersequence
