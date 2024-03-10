@@ -6,7 +6,7 @@ The paper itself (both main text and SI) is in the `hcosy.pdf` file.
 
 ## Scripts and raw data
 
-Raw NMR data used for the paper can be downloaded from this GitHub release: https://github.com/yongrenjie/hcosy-paper/releases/tag/data.
+Raw NMR data used for the paper can be downloaded from this GitHub release: https://github.com/yongrenjie/hsqc-cosy-paper/releases/tag/data.
 (Look for the `hcosy_raw.zip` file.)
 
 Scripts used to plot figures can be found in the `figures` subdirectory of the repository.
