@@ -35,6 +35,7 @@ for i, dss, ax, t in apt.enzip(dsss, axs.flat, texts):
                        ref_datasets=ref_datasets,
                        ylabel="relative intensity",
                        xlabel='',
+                       edited=[1],  # 2nd dataset is mult edited
                        expt_labels=['', '', ''],
                        palette=apt.PAL,
                        ax=ax, legend=False)
