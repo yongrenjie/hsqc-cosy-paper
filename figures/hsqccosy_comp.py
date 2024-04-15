@@ -25,7 +25,7 @@ for i, ds, ax in apt.enzip(dss, axs.flat):
     pg.mkplot(ax)
     pg.ymove(ax)
 
-for ax in axs[3:5]:
+for ax in axs.flat[3:5]:
     p = dict(arrowstyle="->", color="#888")
     ax.annotate("", xy=(3.22, 37), xytext=(3.08, 32), arrowprops=p)
     ax.annotate("", xy=(1.96, 55), xytext=(2.10, 50), arrowprops=p)
